@@ -155,6 +155,7 @@ export default function ChatApp({clicked}) {
 
     setMessage("");
   };
+  console.log('hi',clicked)
 
   return (
     <div className="flex h-screen text-white font-sans bg-[#1f2225]">
@@ -390,12 +391,9 @@ export default function ChatApp({clicked}) {
             </form>
           </>
         ) : (
-          <div
-            className="flex-1 flex items-center justify-center"
-            style={{ color: "#8696a0", backgroundColor: '#1f2225',width:'984px' }}
-          >
+            <Box sx={{width:'100%'}}>
             Select a chat to start messaging
-          </div>
+          </Box>
         )}
       </div>
     </div>
