@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import SideBar from '../widgets/SideBar'
 
 const Status = () => {
   const [myStatusPic, setMyStatusPic] = useState(''); // State for My status media
@@ -61,8 +62,9 @@ const Status = () => {
   };
 
   return (
-    <div className="flex h-screen bg-black text-white font-sans scrollbar-hide">
+    <div className="flex h-screen bg-[#1f2225]  text-white font-sans scrollbar-hide">
       {/* Left Navigation Sidebar (Placeholder - Replace with your existing sidebar) */}
+      <SideBar/>
      <style jsx>{`
           .scrollbar-none {
             -ms-overflow-style: none;
@@ -73,7 +75,7 @@ const Status = () => {
           }
         `}</style>
       {/* Status Container */}
-      <div className="w-80 bg-black p-4 border-r border-gray-800 overflow-y-auto">
+      <div className="w-80 bg-[#1f2225]  p-4 border-r border-gray-800 overflow-y-auto">
         {/* My Status */}
         <div className="mb-6">
           <Typography variant="subtitle1" className="text-gray-400 mb-3 font-medium">
@@ -164,7 +166,7 @@ const Status = () => {
       </div>
 
       {/* Right Rectangle Container */}
-      <div className="flex-1 bg-black flex items-center justify-center p-6">
+      <div className="flex-1 bg-[#1f2225]  flex items-center justify-center p-6">
         <div className="text-center">
           <Typography variant="h6" className="text-gray-400 mb-3 font-medium">
             Share status updates

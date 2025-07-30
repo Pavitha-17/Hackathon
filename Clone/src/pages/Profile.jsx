@@ -1,9 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { Avatar, IconButton, Button, Snackbar, Alert, Modal, Box } from '@mui/material';
+import {
+  Avatar,
+  IconButton,
+  Button,
+  Snackbar,
+  Alert,
+  Modal,
+  Box,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import SideBar from '../widgets/SideBar';
 
 const Profile = () => {
   const [editName, setEditName] = useState(false);
@@ -30,7 +39,6 @@ const Profile = () => {
     }
   };
 
- 
   const saveProfilePic = () => {
     setProfilePic(tempProfilePic);
     setTempProfilePic(null);
@@ -38,7 +46,6 @@ const Profile = () => {
     setSnackbar({ open: true, message: 'Profile picture updated!', severity: 'success' });
   };
 
-  
   const cancelProfilePic = () => {
     setTempProfilePic(null);
     setOpenModal(false);
@@ -54,7 +61,6 @@ const Profile = () => {
     setSnackbar({ open: true, message: 'Name updated!', severity: 'success' });
   };
 
-
   const cancelName = () => {
     setTempName(name);
     setEditName(false);
@@ -66,7 +72,6 @@ const Profile = () => {
     setSnackbar({ open: true, message: 'About updated!', severity: 'success' });
   };
 
-
   const cancelAbout = () => {
     setTempAbout(about);
     setEditAbout(false);
@@ -77,101 +82,114 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#111b21] text-white flex flex-col items-center pt-10 px-4 font-sans">
-      <div className="max-w-md w-full space-y-6">
-       
-        <h2 className="text-2xl font-semibold text-white">Profile</h2>
+    <div className="min-h-screen bg-[#1f2225] text-white flex font-sans">
+      {/* Sidebar */}
+      <SideBar />
 
-       
-        <div className="flex flex-col items-center relative">
-          <Avatar
-            src={profilePic}
-            alt="Profile"
-            sx={{ width: 120, height: 120, border: '2px solid #00a884' }}
-          />
-          <label htmlFor="profile-pic-upload">
-            <IconButton
-              component="span"
-              className="absolute bottom-0 right-0 bg-[#00a884] text-white"
-              sx={{ bgcolor: '#00a884', '&:hover': { bgcolor: '#008069' } }}
-            >
-              <PhotoCameraIcon fontSize="small" />
-            </IconButton>
-          </label>
-          <input
-            id="profile-pic-upload"
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={handleProfilePicChange}
-            ref={fileInputRef}
-          />
-        </div>
+      {/* Main Section: Left editor + Right profile box */}
+      <div className="flex flex-1">
+        {/* Left Side */}
+        <div className="w-3/8 p-10 space-y-6">
+          <h2 className="text-2xl font-semibold text-white">Profile</h2>
 
-   
-        <div>
-          <p className="text-gray-400 text-sm mb-1">Your name</p>
-          <div className="flex items-center bg-[#202c33] rounded-lg px-3 py-2 w-full">
-            <input
-              type="text"
-              className={`bg-transparent text-white flex-1 outline-none text-sm ${editName ? 'border-b-2 border-green-500' : ''}`}
-              value={tempName}
-              disabled={!editName}
-              onChange={(e) => setTempName(e.target.value.replace(/✨/g, ''))} // Remove emoji when editing
+          {/* Avatar */}
+          <div className="flex flex-col items-center relative space-y-4">
+            <Avatar
+              src={profilePic}
+              alt="Profile"
+              sx={{ width: 120, height: 120, border: '2px solid #00a884' }}
             />
-            {editName ? (
-              <div className="flex space-x-2">
-                <IconButton size="small" onClick={saveName} className="text-white">
-                  <CheckIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small" onClick={cancelName} className="text-white">
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </div>
-            ) : (
-              <IconButton size="small" className="text-white" onClick={() => setEditName(true)}>
-                <EditIcon fontSize="small" />
+            <label htmlFor="profile-pic-upload">
+              <IconButton
+                component="span"
+                className="absolute bottom-0 right-0 bg-[#00a884] text-white"
+                sx={{ bgcolor: '#00a884', '&:hover': { bgcolor: '#008069' } }}
+              >
+                <PhotoCameraIcon fontSize="small" />
               </IconButton>
-            )}
+            </label>
+            <input
+              id="profile-pic-upload"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleProfilePicChange}
+              ref={fileInputRef}
+            />
           </div>
-          <p className="text-gray-500 text-xs mt-1">
-            This is not your username or PIN. This name will be visible to your WhatsApp contacts.
-          </p>
+
+          {/* Name Field */}
+          <div>
+            <p className="text-gray-400 text-sm mb-1">Your name</p>
+            <div className="flex items-center bg-[#202c33] rounded-lg px-3 py-2 w-full">
+              <input
+                type="text"
+                className={`bg-transparent text-white flex-1 outline-none text-sm ${editName ? 'border-b-2 border-green-500' : ''}`}
+                value={tempName}
+                disabled={!editName}
+                onChange={(e) => setTempName(e.target.value.replace(/✨/g, ''))}
+              />
+              {editName ? (
+                <div className="flex space-x-2">
+                  <IconButton size="small" onClick={saveName} className="text-white">
+                    <CheckIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton size="small" onClick={cancelName} className="text-white">
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </div>
+              ) : (
+                <IconButton size="small" className="text-white" onClick={() => setEditName(true)}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </div>
+            <p className="text-gray-500 text-xs mt-1">
+              This is not your username or PIN. This name will be visible to your WhatsApp contacts.
+            </p>
+          </div>
+
+          {/* About Field */}
+          <div>
+            <p className="text-gray-400 text-sm mb-1">About</p>
+            <div className="flex items-center bg-[#202c33] rounded-lg px-3 py-2">
+              {editAbout ? (
+                <textarea
+                  className="bg-transparent text-white flex-1 outline-none text-sm resize-none"
+                  value={tempAbout}
+                  onChange={(e) => setTempAbout(e.target.value)}
+                  rows={3}
+                />
+              ) : (
+                <span className="text-white text-sm" dangerouslySetInnerHTML={{ __html: about }} />
+              )}
+              {editAbout ? (
+                <div className="flex space-x-2">
+                  <IconButton size="small" onClick={saveAbout} className="text-white">
+                    <CheckIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton size="small" onClick={cancelAbout} className="text-white">
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </div>
+              ) : (
+                <IconButton size="small" className="text-white" onClick={() => setEditAbout(true)}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </div>
+          </div>
         </div>
 
-        
-        <div>
-          <p className="text-gray-400 text-sm mb-1">About</p>
-          <div className="flex items-center bg-[#202c33] rounded-lg px-3 py-2">
-            {editAbout ? (
-              <textarea
-                className="bg-transparent text-white flex-1 outline-none text-sm resize-none"
-                value={tempAbout}
-                onChange={(e) => setTempAbout(e.target.value)}
-                rows={3}
-              />
-            ) : (
-              <span className="text-white text-sm" dangerouslySetInnerHTML={{ __html: about }} />
-            )}
-            {editAbout ? (
-              <div className="flex space-x-2">
-                <IconButton size="small" onClick={saveAbout} className="text-white">
-                  <CheckIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small" onClick={cancelAbout} className="text-white">
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </div>
-            ) : (
-              <IconButton size="small" className="text-white" onClick={() => setEditAbout(true)}>
-                <EditIcon fontSize="small" />
-              </IconButton>
-            )}
+        {/* Right Side Box */}
+        <div className="w-1/4 flex items-center justify-center border-l border-gray-700">
+          <div className=" w-48 h-48 flex items-center justify-center rounded-lg ">
+            <p className="text-gray-400 text-xl font-medium">Profile</p>
           </div>
         </div>
       </div>
 
- 
+      {/* Profile Pic Modal */}
       <Modal open={openModal} onClose={cancelProfilePic}>
         <Box
           sx={{
@@ -210,7 +228,7 @@ const Profile = () => {
         </Box>
       </Modal>
 
-      {/* Snackbar for Notifications */}
+      {/* Snackbar Notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
